@@ -24,7 +24,7 @@ import {
 
 // Here's the unique part, generator function*, function with asterisk(*)
 
-function* generateFile() {
+function* getGeneratedFile() {
   yield put({ type: FILE_GENERATION_REQUESTING });
 
   const file = yield call(generateFileApi);
@@ -42,6 +42,6 @@ function* getFileContentReport() {
 
 // Export the saga (file-generation-saga)
 export default function* fileGenerationSaga() {
-  yield takeEvery(FILE_GENERATION_SUCCESS, generateFile);
+  yield takeEvery(FILE_GENERATION_SUCCESS, getGeneratedFile);
   yield takeEvery(FILE_CONTENT_REPORT_SUCCESS, getFileContentReport);
 }

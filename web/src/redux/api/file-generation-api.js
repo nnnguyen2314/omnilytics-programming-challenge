@@ -8,7 +8,6 @@ const axios = defaultAxios.create({
 export const generateFileApi = async () => {
 	try {
 		const file = await axios.get('generate');
-console.log(file);
 		return file.data;
 	} catch(err) {
 		return console.error(err)

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {
-    FILE_GENERATION_SUCCESS
+    FILE_GENERATION_SUCCESS, SET_FILE_GENERATION_LINK
 } from '../../redux/actions/file-generate-action';
 
 const FileGenerationForm = ({
