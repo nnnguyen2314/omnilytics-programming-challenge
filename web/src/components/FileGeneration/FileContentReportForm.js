@@ -1,19 +1,22 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
-import {
-    FILE_CONTENT_REPORT_SUCCESS
-} from '../../redux/actions/file-generate-action';
+import FetchDataApiHandler from "../../hooks/FetchDataApiHandler";
 
-const FileContentReportForm = ({
-                                fileReport,
-                                setFileReport
-                            }) => {
+const initialData = {
+    fileReport: {
+        numberOfAlphabeticals: null,
+        numberOfRealNumbers: null,
+        numberOfIntegers: null,
+        numberOfAlphanumerics: null,
+    },
+};
+
+const FileContentReportForm = () => {
+    const [{ data, isLoading, isError }, doFetch] = FetchDataApiHandler('/generate', initialData);
 
     const onSubmit = (e) => {
+        doFetch('/generate');
         e.preventDefault();
-        setFileReport(fileReport);
     };
 
     return (
@@ -21,35 +24,20 @@ const FileContentReportForm = ({
             <p>
                 <button type="submit">Report</button>
             </p>
-            <p>
-                Alphabeticals: <span>{fileReport.numberOfAlphabeticals}</span>
-            </p>
-            <p>
-                Real numbers: <span>{fileReport.numberOfRealNumbers}</span>
-            </p>
-            <p>
-                Integers: <span>{fileReport.numberOfIntegers}</span>
-            </p>
-            <p>
-                Alphanumerics: <span>{fileReport.numberOfAlphanumerics}</span>
-            </p>
+            {/*<p>*/}
+            {/*    Alphabeticals: <span>{data.fileReport.numberOfAlphabeticals}</span>*/}
+            {/*</p>*/}
+            {/*<p>*/}
+            {/*    Real numbers: <span>{data.fileReport.numberOfRealNumbers}</span>*/}
+            {/*</p>*/}
+            {/*<p>*/}
+            {/*    Integers: <span>{data.fileReport.numberOfIntegers}</span>*/}
+            {/*</p>*/}
+            {/*<p>*/}
+            {/*    Alphanumerics: <span>{data.fileReport.numberOfAlphanumerics}</span>*/}
+            {/*</p>*/}
         </form>
     );
 };
 
-FileContentReportForm.propTypes = {
-    fileReport: PropTypes.any,
-    setFileReport: PropTypes.func.isRequired
-};
-
-// Get state to props
-const mapStateToProps = (state) => ({
-    fileReport: state.fileGeneration.fileReport
-});
-
-// Get dispatch / function to props
-const mapDispatchToProps = (dispatch) => ({
-    setFileReport: (fileReport) => dispatch({ type: FILE_CONTENT_REPORT_SUCCESS, payload: fileReport })
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(FileContentReportForm);
+export default FileContentReportForm;

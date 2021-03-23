@@ -1,19 +1,26 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
-import {
-    FILE_GENERATION_SUCCESS, SET_FILE_GENERATION_LINK
-} from '../../redux/actions/file-generate-action';
+import FetchDataApiHandler from "../../hooks/FetchDataApiHandler";
 
-const FileGenerationForm = ({
-                                generatedFile,
-                                setFile
-                            }) => {
+const initialData = {
+    file: {
+        name: '',
+        url: '',
+    },
+    fileReport: {
+        numberOfAlphabeticals: null,
+        numberOfRealNumbers: null,
+        numberOfIntegers: null,
+        numberOfAlphanumerics: null,
+    },
+};
+
+const FileGenerationForm = () => {
+    const [{ data, isLoading, isError }, doFetch] = FetchDataApiHandler('/generate', initialData);
 
     const onSubmit = (e) => {
+        doFetch('/generate');
         e.preventDefault();
-        setFile(generatedFile);
     };
 
     return (
@@ -21,26 +28,16 @@ const FileGenerationForm = ({
             <p>
                 <button type="submit">Generate</button>
             </p>
+            {isError && <div>Something went wrong ...</div>}
+            {isLoading ? (
+                <div>Loading ...</div>
+            ) : (
             <p>
-                Link: <a href={generatedFile.url}>{generatedFile.name}</a>
+                Link: <a href={data.file.url}>{data.file.name}</a>
             </p>
+            )}
     </form>
     );
 };
 
-FileGenerationForm.propTypes = {
-    generatedFile: PropTypes.any,
-    setFile: PropTypes.func.isRequired
-};
-
-// Get state to props
-const mapStateToProps = (state) => ({
-    generatedFile: state.fileGeneration.file
-});
-
-// Get dispatch / function to props
-const mapDispatchToProps = (dispatch) => ({
-    setFile: (file) => dispatch({ type: FILE_GENERATION_SUCCESS, payload: file })
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(FileGenerationForm);
+export default FileGenerationForm;

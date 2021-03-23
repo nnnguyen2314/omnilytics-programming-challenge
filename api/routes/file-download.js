@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
-const baseUrl = "http://localhost:3000/resources/static/files/";
+const baseUrl = "http://localhost:3000/files/";
 
 const getListFiles = (req, res) => {
     const directoryPath = __basedir + "/resources/static/files/";

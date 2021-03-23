@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
+const baseUrl = "http://localhost:3000/files/";
 
 const maxTotalLength = 262144;
 function generateRandomStrings(minLength, maxLength, chars) {
@@ -29,16 +30,18 @@ function randomIntegers(min, max, numberOfIntegers) {
 
 /* GET file of generated strings listing. */
 router.get('/generate', function(req, res, next) {
+  const directoryPath = __basedir + "/resources/static/files/";
+
   const alphanumericString = generateRandomStrings(4, 20, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
   const alphabeticalString = generateRandomStrings(4, 20, 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
   const integers = randomIntegers(1, Number.MAX_SAFE_INTEGER, alphabeticalString.length); //2147483647
 
   const alpha = [...alphabeticalString, ...integers, ...alphanumericString];
 
-  fs.writeFileSync('./resources/static/files/myfile.txt', alpha.toString());
+  fs.writeFileSync(directoryPath + 'myfile.txt', alpha.toString());
   res.send({ file: {
       name: 'myfile',
-      url: '/files/myfile.txt'
+      url: baseUrl + 'myfile.txt'
     }});
 });
 

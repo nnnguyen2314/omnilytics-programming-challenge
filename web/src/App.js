@@ -1,10 +1,4 @@
-import React from 'react'
-
-// bring Provider from react-redux, it's the bridge for connecting react to redux
-import { Provider } from 'react-redux'
-
-// Bring the redux store too
-import store from './redux/store'
+import React, {Fragment} from 'react';
 
 // Components
 import FileGenerationForm from "./components/FileGeneration/FileGenerationForm";
@@ -13,10 +7,11 @@ import FileContentReportForm from "./components/FileGeneration/FileContentReport
 const App = () => {
   return (
     // Register your redux Provider here
-    <Provider store={store}>
-      <FileGenerationForm />
-      <FileContentReportForm />
-    </Provider>
+      <Fragment>
+        <FileGenerationForm />
+        <FileContentReportForm />
+    </Fragment>
   )
-}
-export default App
+};
+
+export default App;
